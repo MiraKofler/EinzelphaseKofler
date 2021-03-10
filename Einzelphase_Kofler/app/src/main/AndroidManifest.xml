@@ -3,7 +3,6 @@
     package="com.example.einzelphase_kofler">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
 
     <application
