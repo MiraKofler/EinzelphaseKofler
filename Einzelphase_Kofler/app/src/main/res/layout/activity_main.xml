@@ -9,18 +9,18 @@
 
     <TextView
         android:id="@+id/textview_Calculate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="395dp"
+        android:layout_height="54dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
         android:layout_marginTop="542dp"
-        android:layout_marginEnd="351dp"
-        android:layout_marginRight="351dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
         android:text="0"
         android:textColor="@color/black"
-        android:textSize="50sp" />
+        android:textSize="15sp" />
 
     <EditText
         android:id="@+id/edittext_matrikelnummer"
@@ -34,18 +34,18 @@
 
     <TextView
         android:id="@+id/textview_result"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="390dp"
+        android:layout_height="41dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
         android:layout_marginTop="318dp"
-        android:layout_marginEnd="340dp"
-        android:layout_marginRight="340dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginRight="5dp"
         android:text="0"
         android:textColor="@color/black"
-        android:textSize="50sp" />
+        android:textSize="15sp" />
 
     <Button
         android:id="@+id/button_send"

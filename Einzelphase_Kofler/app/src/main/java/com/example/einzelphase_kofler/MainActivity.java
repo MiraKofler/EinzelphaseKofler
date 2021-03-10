@@ -19,6 +19,9 @@ public class MainActivity extends AppCompatActivity {
     public static TextView textViewResult;
     public Button buttonSend;
 
+    public static TextView textViewCalculate;
+    public Button buttonCalculate;
+
 
     public static void main(String[] args) {
 
@@ -32,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         editTextMatrikelnummer = findViewById(R.id.edittext_matrikelnummer);
         buttonSend = (Button) findViewById(R.id.button_send);
         textViewResult = findViewById(R.id.textview_result);
-        //textViewResult.setText(mod);
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,6 +77,70 @@ public class MainActivity extends AppCompatActivity {
                 }.start();
             }
         });
+
+        textViewCalculate = findViewById(R.id.textview_Calculate);
+        buttonCalculate = (Button) findViewById(R.id.button_calculate);
+
+        buttonCalculate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread() {
+                    public void run() {
+                        if (editTextMatrikelnummer.getText().toString().length() == 0) {
+                            editTextMatrikelnummer.setText(0);
+                        }
+
+                        int num = Integer.parseInt(editTextMatrikelnummer.getText().toString());
+                        int result = toArray(num);
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                textViewCalculate.setText(String.valueOf(result));
+                            }
+                        });
+
+                    }
+                }.start();
+            }
+        });
+    }
+
+    private int toArray(int num) {
+        //save the number in a Array
+        String buf = Integer.toString(num);
+        int[] array = new int[buf.length()];
+        for (int i = 0; i < buf.length(); i++) {
+            array[i] = Character.getNumericValue(buf.charAt(i));
+        }
+
+        //sort the array
+        array = bubbleSort(array);
+
+
+        //turns array into an integer
+        int result = 0;
+        for (int a : array) {
+            result = 10 * result + a;
+        }
+
+        return result;
+    }
+
+    private static int[] bubbleSort(int[] arr) {
+        int n = arr.length;
+        int temp = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 1; j < (n - i); j++) {
+                if (arr[j - 1] > arr[j]) {
+                    temp = arr[j - 1];
+                    arr[j - 1] = arr[j];
+                    arr[j] = temp;
+                }
+
+            }
+        }
+        return arr;
     }
 
 
