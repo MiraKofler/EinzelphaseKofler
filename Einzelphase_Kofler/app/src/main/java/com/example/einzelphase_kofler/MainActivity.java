@@ -13,8 +13,10 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.Arrays;
 
 public class MainActivity extends AppCompatActivity {
+    public int primeNumbers = 0;
     public EditText editTextMatrikelnummer;
     public static TextView textViewResult;
     public Button buttonSend;
@@ -29,23 +31,21 @@ public class MainActivity extends AppCompatActivity {
         editTextMatrikelnummer = findViewById(R.id.edittext_matrikelnummer);
         buttonSend = findViewById(R.id.button_send);
         textViewResult = findViewById(R.id.textview_result);
+        textViewCalculate = findViewById(R.id.textview_Calculate);
+        buttonCalculate = (Button) findViewById(R.id.button_calculate);
 
         buttonSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listenerButtonSend();
-
             }
         });
 
-        textViewCalculate = findViewById(R.id.textview_Calculate);
-        buttonCalculate = (Button) findViewById(R.id.button_calculate);
 
         buttonCalculate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listenerButtonCalculate();
-
             }
         });
     }
@@ -92,16 +92,12 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     int num = Integer.parseInt(editTextMatrikelnummer.getText().toString());
-                    int result = toArray(num);
+                    String result = toCalculate(num);
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if (result == -1) {
-                                textViewCalculate.setText(-1);
-                            } else {
-                                textViewCalculate.setText(String.valueOf(result));
-                            }
+                            textViewCalculate.setText(result);
                         }
                     });
 
@@ -112,33 +108,39 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private int toArray(int num) {
+    private String toCalculate(int num) {
         //save the number in an Array
-        String buf = Integer.toString(num);
-        int[] array = new int[buf.length()];
-        for (int i = 0; i < buf.length(); i++) {
-            array[i] = Character.getNumericValue(buf.charAt(i));
+        String stringNum = Integer.toString(num);
+        int[] array = new int[stringNum.length()];
+        for (int i = 0; i < stringNum.length(); i++) {
+            array[i] = Character.getNumericValue(stringNum.charAt(i));
         }
+
         array = bubbleSort(array);
-        int result = finalProduct(array);
+        String result = finalProduct(array);
 
         return result;
     }
 
-    private int finalProduct(int[] array){
-        //turns array into an integer
-        int result = 0;
-        int primenum = 0;
-        for (int a : array) {
-            if(a == 2 || a == 3 || a == 5 || a == 7){
-                primenum = 10 * result + a;
-            }else {
-                result = 10 * result + a;
+    private String finalProduct(int[] array){
+        for(int i = 0; i < array.length; i++){
+           if(isPrime(array[i])){
+               primeNumbers++;
+           }
+        }
+
+        int[] res = new int[array.length - primeNumbers];
+        int j = 0;
+
+
+        for(int i = 0; i < array.length; i++) {
+            if(!isPrime(array[i])){
+                res[j] = array[i];
+                j++;
             }
         }
 
-        if(primenum > 10000000)     return -1;
-        else                        return result;
+        return Arrays.toString(res);
     }
 
     private static int[] bubbleSort(int[] arr) {
@@ -154,6 +156,11 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return arr;
+    }
+
+    private boolean isPrime(int a){
+        if(a == 2 || a == 3 || a == 5 || a == 7)    return true;
+        else                                        return false;
     }
 
 }
